@@ -1,24 +1,30 @@
-library adaptive_appbar;
-
 import 'package:flutter/material.dart';
 
 //ignore: must_be_immutable
 class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   final BuildContext context;
+  // AppBar's title
   final String title;
-  final String responsiveBackButtonTitle;
+  // Title for back button (Shows only on big screens)
+  final String backButtonTitle;
+  // Handle on back button press
   final Function()? onBackPressed;
+  // Custom background color
   Color? backgroundColor;
+  // Custom foreground color
   Color foregroundColor;
+  // Custom widget at the end of the AppBar
+  Widget? widget;
 
   AdaptiveAppBar(
     this.context, {
     super.key,
     required this.title,
-    this.responsiveBackButtonTitle = "Cancel",
+    this.backButtonTitle = "Cancel",
     required this.onBackPressed,
     this.backgroundColor,
     this.foregroundColor = Colors.black,
+    this.widget,
   });
 
   static double _scale = 1;
@@ -108,7 +114,7 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
             width: 10,
           ),
           Text(
-            responsiveBackButtonTitle,
+            backButtonTitle,
             style: TextStyle(fontSize: 14, color: foregroundColor),
           )
         ],
@@ -138,25 +144,34 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
       flexibleSpace: SafeArea(
         child: SizedBox(
           height: AdaptiveAppBar._fixedHeight * AdaptiveAppBar._scale,
-          child: Row(
-            children: [
-              //back button
-              Padding(
-                padding: const EdgeInsets.only(right: 40, left: 24),
-                child: InkWell(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            child: Row(
+              children: [
+                // Back button
+                InkWell(
                     onTap: onBackPressed ?? () => Navigator.pop(context),
                     child: leadingWidget),
-              ),
 
-              //Title
-              Text(
-                title,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18 * AdaptiveAppBar._scale,
-                    color: foregroundColor),
-              )
-            ],
+                const SizedBox(
+                  width: 40,
+                ),
+
+                // Title
+                Text(
+                  title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18 * AdaptiveAppBar._scale,
+                      color: foregroundColor),
+                ),
+
+                const Spacer(),
+
+                // Custom widget
+                widget ?? const SizedBox.shrink(),
+              ],
+            ),
           ),
         ),
       ),
