@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 //ignore: must_be_immutable
 class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   final BuildContext context;
-  // AppBar's title
+  /// AppBar's title
   final String title;
-  // Title for back button (Shows only on big screens)
+  /// Title for back button (Shows only on big screens)
   final String backButtonTitle;
-  // Handle on back button press
+  /// Handle on back button press
   final Function()? onBackPressed;
-  // Custom background color
+  /// Custom background color
   Color? backgroundColor;
-  // Custom foreground color
+  /// Custom foreground color
   Color foregroundColor;
-  // Custom widget at the end of the AppBar
+  /// Custom widget at the end of the AppBar
   Widget? widget;
 
   AdaptiveAppBar(
