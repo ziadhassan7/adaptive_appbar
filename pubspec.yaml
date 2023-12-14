@@ -1,7 +1,7 @@
 name: adaptive_appbar
-description: A new Flutter project.
+description: This is a model appbar package created to easily make an adaptive AppBar for both mobile and web development.
 version: 0.0.1
-homepage:
+repository: https://github.com/ziadhassan7/adaptive_appbar
 
 environment:
   sdk: '>=3.1.5 <4.0.0'
