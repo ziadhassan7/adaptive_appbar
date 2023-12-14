@@ -1,6 +1,6 @@
 name: adaptive_appbar
 description: This is a model appbar package created to easily make an adaptive AppBar for both mobile and web development.
-version: 0.0.1
+version: 1.0.0
 repository: https://github.com/ziadhassan7/adaptive_appbar
 
 environment:
