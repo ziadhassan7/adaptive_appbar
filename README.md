@@ -4,10 +4,24 @@ This is a model appbar package created to easily make an adaptive AppBar for bot
 
 * Responsive.
 * Easy to implement.
-* Simple customization.
+* Fully customizable!
 
 ## Usage
 
 ```dart
-const like = 'sample';
+AdaptiveAppBar(
+    context,
+    title: "Awesome AppBar",
+    onBackPressed: () {},
+    
+    //Extras:
+    // Title for back button (Shows only on big screens)
+    //backButtonTitle: "Discard",
+    // Custom background color
+    //backgroundColor: Colors.blue,
+    // Custom foreground color
+    //foregroundColor: Colors.white,
+    // Custom foreground color
+    //widget: const Icon(Icons.access_alarm),
+);
 ```
