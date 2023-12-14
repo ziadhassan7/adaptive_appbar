@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
         //backgroundColor: Colors.blue,
         // Custom foreground color
         //foregroundColor: Colors.white,
-        // Custom foreground color
+        // Custom widget at the end of the AppBar
         //widget: const Icon(Icons.access_alarm),
       ),
 
