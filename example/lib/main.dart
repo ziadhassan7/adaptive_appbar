@@ -39,9 +39,11 @@ class HomePage extends StatelessWidget {
         // Title for back button (Shows only on big screens)
         //backButtonTitle: "Discard",
         // Custom background color
-        //backgroundColor: Colors.blue,
+        //backgroundColor: Colors.white,
         // Custom foreground color
-        //foregroundColor: Colors.white,
+        //foregroundColor: Colors.blue,
+        // Custom elevation
+        //elevation: 1,
         // Custom widget at the end of the AppBar
         //widget: const Icon(Icons.access_alarm),
       ),
