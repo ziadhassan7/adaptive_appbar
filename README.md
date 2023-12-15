@@ -29,9 +29,11 @@ AdaptiveAppBar(
     // Title for back button (Shows only on big screens)
     backButtonTitle: "Discard",
     // Custom background color
-    backgroundColor: Colors.blue,
+    backgroundColor: Colors.white,
     // Custom foreground color
-    foregroundColor: Colors.white,
+    foregroundColor: Colors.blue,
+    // Custom elevation
+    elevation: 1,
     // Custom widget at the end of the AppBar
     widget: const Icon(Icons.access_alarm),
 );
@@ -42,9 +44,10 @@ AdaptiveAppBar(
 
 | Name | Description | Data type | Default value | 
 |:------------|-----------------------------------------|----------|-----------|
-| title | Dialog's title | String | - | 
-| backButtonTitle | Widget showing the dialog's content | String | "Cancel" | 
-| onBackPressed | Function that let you build the group separator widget | Function() | - | 
-| backgroundColor | Function to handle main button click | Color | colorScheme.primaryContainer | 
-| foregroundColor | Perform an action on closing the dialog | Color | colorScheme.onSecondaryContainer -OR- Colors.black| 
-| widget | Cancel button title | Widget | - |
+| title | AppBar's title | String | - | 
+| backButtonTitle | Title for back button (Shows only on big screens) | String | "Cancel" | 
+| onBackPressed | Handle back button press | Function() | - | 
+| backgroundColor | Custom background color | Color | colorScheme.primaryContainer | 
+| foregroundColor | Custom foreground color | Color | colorScheme.onSecondaryContainer -OR- Colors.black | 
+| elevation | Custom elevation | double | 0 | 
+| widget | Custom widget at the end of the AppBar | Widget | - |
