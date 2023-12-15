@@ -1,4 +1,4 @@
-This is a model appbar package created to easily make an adaptive AppBar for both mobile and web development.
+A model for an adaptive AppBar. Created to easily make an app bar that changes size for both mobile and web development.
 
 ![adaptive_appbar](https://github.com/ziadhassan7/adaptive_appbar/assets/31738365/a826fec0-c350-4dd7-8598-0a75edb696ae)
 
