@@ -10,7 +10,7 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Title for back button (Shows only on big screens)
   final String backButtonTitle;
 
-  /// Handle on back button press
+  /// Handle back button press
   final Function()? onBackPressed;
 
   /// Custom background color
