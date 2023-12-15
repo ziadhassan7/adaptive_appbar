@@ -19,6 +19,9 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Custom foreground color
   Color foregroundColor;
 
+  /// Custom elevation
+  double elevation;
+
   /// Custom widget at the end of the AppBar
   Widget? widget;
 
@@ -30,6 +33,7 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.onBackPressed,
     this.backgroundColor,
     this.foregroundColor = Colors.black,
+    this.elevation = 0,
     this.widget,
   });
 
@@ -40,12 +44,16 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize =>
       Size.fromHeight(AdaptiveAppBar._fixedHeight * getScale(context));
 
-  double getScale(BuildContext context) {
+  bool isDesktop() {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    //Get Adaptive
-    if (isDesktop(screenWidth, screenHeight)) {
+    return (screenWidth > 600 && screenHeight > 400);
+  }
+
+  double getScale(BuildContext context) {
+    // Set Scale
+    if (isDesktop()) {
       return _scale = 1.4;
     } else {
       return _scale = 1;
@@ -56,51 +64,78 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Set AppBar default colors
     if (backgroundColor == null) {
       backgroundColor = Theme.of(context).colorScheme.primaryContainer;
       foregroundColor = Theme.of(context).colorScheme.onSecondaryContainer;
     }
 
-    return getWidget(context);
+    // Get Custom AppBar
+    return getWidget();
   }
 
-  //Decide adaptive layout
-  bool isDesktop(double screenWidth, double screenHeight) {
-    return (screenWidth > 600 && screenHeight > 400);
-  }
-
-  Widget getWidget(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    //Get Adaptive
-    if (isDesktop(screenWidth, screenHeight)) {
-      return desktopAppBar(context);
+  Widget getWidget() {
+    if (isDesktop()) {
+      return _customAppBar(_desktopLeadingWidget());
     } else {
-      return mobileAppBar(context);
+      return _customAppBar(_mobileLeadingWidget());
     }
   }
 
-  ///Layouts
-  //Get Mobile layout
-  Widget mobileAppBar(BuildContext context) {
-    return customAppBar(
-      context,
-      leadingWidget: mobileLeadingWidget(),
+  ///Custom AppBar
+  Widget _customAppBar(Widget leadingWidget) {
+    return Material(
+      elevation: elevation,
+      child: AppBar(
+        backgroundColor: backgroundColor,
+        automaticallyImplyLeading: false,
+        toolbarHeight: AdaptiveAppBar._fixedHeight * AdaptiveAppBar._scale,
+        scrolledUnderElevation: 0, //do not change color on scroll
+
+        flexibleSpace: SafeArea(
+          child: SizedBox(
+            height: AdaptiveAppBar._fixedHeight * AdaptiveAppBar._scale,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 28),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Back button
+                  InkWell(
+                      onTap: onBackPressed ?? () => Navigator.pop(context),
+                      child: leadingWidget),
+
+                  // Title
+                  Expanded(child: getTitle()),
+
+                  // Custom widget
+                  widget ?? const SizedBox.shrink(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
-  //Get Desktop Layout
-  Widget desktopAppBar(BuildContext context) {
-    return customAppBar(
-      context,
-      leadingWidget: desktopLeadingWidget(),
+  /// AppBar Title
+  Widget getTitle() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Text(
+        title,
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18 * _scale,
+            color: foregroundColor),
+      ),
     );
   }
 
-  ///Widgets
+  /// Back/Cancel Button
   //desktop leading widget
-  Widget desktopLeadingWidget() {
+  Widget _desktopLeadingWidget() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
       decoration: BoxDecoration(
@@ -129,58 +164,9 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   //mobile leading widget
-  Widget mobileLeadingWidget() => Icon(
+  Widget _mobileLeadingWidget() => Icon(
         Icons.close_rounded,
         color: foregroundColor,
         size: 26,
       );
-
-  ///View
-  //Your app bar widget
-  Widget customAppBar(
-    BuildContext context, {
-    required Widget leadingWidget,
-  }) {
-    return AppBar(
-      backgroundColor: backgroundColor,
-      automaticallyImplyLeading: false,
-      toolbarHeight: AdaptiveAppBar._fixedHeight * AdaptiveAppBar._scale,
-      scrolledUnderElevation: 0, //do not change color on scroll
-
-      flexibleSpace: SafeArea(
-        child: SizedBox(
-          height: AdaptiveAppBar._fixedHeight * AdaptiveAppBar._scale,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            child: Row(
-              children: [
-                // Back button
-                InkWell(
-                    onTap: onBackPressed ?? () => Navigator.pop(context),
-                    child: leadingWidget),
-
-                const SizedBox(
-                  width: 40,
-                ),
-
-                // Title
-                Text(
-                  title,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18 * AdaptiveAppBar._scale,
-                      color: foregroundColor),
-                ),
-
-                const Spacer(),
-
-                // Custom widget
-                widget ?? const SizedBox.shrink(),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
