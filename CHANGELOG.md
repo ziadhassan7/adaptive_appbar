@@ -9,3 +9,8 @@
 ## 1.0.1
 
 * Patch fix.
+
+## 1.0.2
+
+* Add: elevation attribute.
+
