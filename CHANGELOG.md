@@ -14,3 +14,7 @@
 
 * Add: elevation attribute.
 
+## 1.0.3
+
+* Update documentation.
+
